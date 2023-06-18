@@ -1,7 +1,7 @@
 import { CommandInteraction, SlashCommandBuilder, User } from "discord.js"
 import { Command, Permission } from "../../command"
-import { ImportantStuff } from "../.."
-import { LinkData, PlayerData, PlayerStats } from "../../database"
+import { ImportantStuff } from "../../bot"
+import { LinkData, PlayerData, PlayerStats } from "../../../database/database"
 import { EmbedBuilder } from "@discordjs/builders"
 
 export default class StatsCommand implements Command {

@@ -2,6 +2,7 @@ import { lstatSync, readdirSync } from "fs"
 import { Command } from "./command"
 import { REST, Routes } from "discord.js"
 import PingCommand from "./commands/general/ping"
+import searchForFIles from "../utils/searchForFiles"
 
 export class CommandLoader {
     public token: string
@@ -29,7 +30,7 @@ export class CommandLoader {
     }
 
     public loadCommands() {
-        this._searchForFiles("./commands").forEach((file: string) => {
+        searchForFIles("./commands").forEach((file: string) => {
             const command: Command = new (require(file).default)()
             this.commands.set(command.name, command)
         })
@@ -44,19 +45,5 @@ export class CommandLoader {
             Routes.applicationGuildCommands(this.clientId, this.guildId),
             { body: cmds }
         )
-    }
-
-    public _searchForFiles(dir: string): string[] {
-        const files = readdirSync(dir)
-        let cmds: string[] = []
-        for (const file of files) {
-            const stat = lstatSync(`${dir}/${file}`)
-            if (stat.isDirectory()) {
-                cmds.push(...this._searchForFiles(`${dir}/${file}`))
-            } else if (file.endsWith(".js")) {
-                cmds.push(`${dir}/${file}`)
-            }
-        }
-        return cmds
     }
 }

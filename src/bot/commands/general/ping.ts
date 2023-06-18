@@ -1,6 +1,6 @@
 import { CommandInteraction, SlashCommandBuilder } from "discord.js"
 import { Command, Permission } from "../../command"
-import { ImportantStuff } from "../.."
+import { ImportantStuff } from "../../bot"
 
 export default class PingCommand implements Command {
     name = "ping"

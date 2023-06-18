@@ -6,7 +6,7 @@ import {
 } from "discord.js"
 import { Command, Permission } from "../../command"
 import { readFileSync } from "fs"
-import { ImportantStuff } from "../.."
+import { ImportantStuff } from "../../bot"
 
 export default class AppCommand implements Command {
     name = "app"
