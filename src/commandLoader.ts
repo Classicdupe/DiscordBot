@@ -1,8 +1,6 @@
-import { lstatSync, readdirSync } from "fs"
 import { Command } from "./command"
 import { REST, Routes } from "discord.js"
-import PingCommand from "./commands/general/ping"
-import searchForFIles from "../utils/searchForFiles"
+import searchForFIles from "./utils/searchForFiles"
 
 export class CommandLoader {
     public token: string

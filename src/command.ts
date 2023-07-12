@@ -2,7 +2,7 @@ import {
     CommandInteraction,
     RESTPostAPIChatInputApplicationCommandsJSONBody
 } from "discord.js"
-import { ImportantStuff } from "./bot"
+import { ImportantStuff } from "."
 
 export interface Command {
     name: string

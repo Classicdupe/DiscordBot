@@ -1,11 +1,11 @@
 import { CommandInteraction, SlashCommandBuilder, User } from "discord.js"
 import { Command, Permission } from "../../command"
-import { ImportantStuff } from "../../bot"
-import { LinkData, PlayerData, PlayerStats } from "../../../database/database"
+import { ImportantStuff } from "../.."
+import { LinkData, PlayerData, PlayerStats } from "../../database"
 import { EmbedBuilder } from "@discordjs/builders"
 
 export default class StatsCommand implements Command {
-    name = "teststats"
+    name = "stats"
     permission = Permission.Default
     description = "To get the stats of a player"
     category = "general"
@@ -53,14 +53,15 @@ export default class StatsCommand implements Command {
                     ? "<@" + linkData.discordId + ">"
                     : "No Discord Account")
 
-            const hours = `0${new Date(playerData.playtime).getHours()}`.slice(
+            
+            const hours = `0${new Date(playerData.playtimeS).getHours()}`.slice(
                 -2
             )
             const minutes = `0${new Date(
-                playerData.playtime
+                playerData.playtimeS
             ).getMinutes()}`.slice(-2)
             const seconds = `0${new Date(
-                playerData.playtime
+                playerData.playtimeS
             ).getSeconds()}`.slice(-2)
 
             interaction.reply({
@@ -89,7 +90,7 @@ export default class StatsCommand implements Command {
                                     playerStats.kills / playerStats.deaths
                                 ).toFixed(2) +
                                 "\n" +
-                                `Playtime: ${hours}:${minutes}:${seconds}\n` +
+                                `Playtime: Coming Soon\n` + //${hours}:${minutes}:${seconds}\n` +
                                 linked
                         )
                 ]
@@ -115,14 +116,14 @@ export default class StatsCommand implements Command {
                 return
             }
 
-            const hours = `0${new Date(playerData.playtime).getHours()}`.slice(
+            const hours = `0${new Date(playerData.playtimeS).getHours()}`.slice(
                 -2
             )
             const minutes = `0${new Date(
-                playerData.playtime
+                playerData.playtimeS
             ).getMinutes()}`.slice(-2)
             const seconds = `0${new Date(
-                playerData.playtime
+                playerData.playtimeS
             ).getSeconds()}`.slice(-2)
 
             interaction.reply({
@@ -151,7 +152,7 @@ export default class StatsCommand implements Command {
                                     playerStats.kills / playerStats.deaths
                                 ).toFixed(2) +
                                 "\n" +
-                                `Playtime: ${hours}:${minutes}:${seconds}\n` +
+                                `Playtime: Coming Soon\n` + //${hours}:${minutes}:${seconds}\n` +
                                 `Linked To: <@${linkData.discordId}>`
                         )
                 ]

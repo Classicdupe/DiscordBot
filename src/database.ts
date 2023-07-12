@@ -8,7 +8,7 @@ export class Database {
         const dbdata: DatabaseData = JSON.parse(
             readFileSync("../resources/database.json", "utf-8")
         )
-
+    
         this.pool = createPool({
             host: dbdata.host,
             user: dbdata.username,
@@ -21,19 +21,23 @@ export class Database {
 
     getPlayerDataByName(name: string): Promise<PlayerData> {
         return new Promise(async (resolve, reject) => {
-            const connection: Connection = await this.pool.getConnection()
-            const result = await connection.query(
+            const result = await this.pool.query(
                 "SELECT * FROM players WHERE name = ?",
                 [name]
             )
-            connection.end()
             if (result.length == 0) return reject("Player not found")
+            /*const result2 = await this.pool.query(
+                "SELECT * FROM playtime WHERE uuid = ?",
+                [result[0].uuid]
+            )
+            if (result2.length == 0) return reject("Player not found")*/
             const playerData: PlayerData = {
                 uuid: result[0].uuid,
                 username: result[0].name,
                 nickname: result[0].nickname,
                 timesjoined: result[0].timesjoined,
-                playtime: result[0].playtime,
+                playtimeS: 0, //result2[0].season,
+                playtimeO: 0, //result2[0].alltime,
                 randomitems: result[0].randomitems,
                 chatcolor: result[0].chatcolor,
                 gradient: result[0].gradient,
@@ -47,19 +51,23 @@ export class Database {
 
     getPlayerDataByUUID(uuid: string): Promise<PlayerData> {
         return new Promise(async (resolve, reject) => {
-            const connection: Connection = await this.pool.getConnection()
-            const result = await connection.query(
+            const result = await this.pool.query(
                 "SELECT * FROM players WHERE uuid = ?",
                 [uuid]
             )
-            connection.end()
             if (result.length == 0) return reject("Player not found")
+            /*const result2 = await this.pool.query(
+                "SELECT * FROM stats WHERE uuid = ?",
+                [uuid]
+            )
+            if (result2.length == 0) return reject("Player not found")*/
             const playerData: PlayerData = {
                 uuid: result[0].uuid,
                 username: result[0].name,
                 nickname: result[0].nickname,
                 timesjoined: result[0].timesjoined,
-                playtime: result[0].playtime,
+                playtimeS: 0, //result2[0].season,
+                playtimeO: 0, //result2[0].alltime,
                 randomitems: result[0].randomitems,
                 chatcolor: result[0].chatcolor,
                 gradient: result[0].gradient,
@@ -73,12 +81,10 @@ export class Database {
 
     getLinkDataByDiscord(discordId: string): Promise<LinkData | undefined> {
         return new Promise(async (resolve, reject) => {
-            const connection: Connection = await this.pool.getConnection()
-            const result = await connection.query(
+            const result = await this.pool.query(
                 "SELECT * FROM link WHERE dscid = ?",
                 [discordId]
             )
-            connection.end()
             if (result.length == 0) return resolve(undefined)
             const linkData: LinkData = {
                 uuid: result[0].uuid,
@@ -90,12 +96,10 @@ export class Database {
 
     getLinkDataByUUID(uuid: string): Promise<LinkData | undefined> {
         return new Promise(async (resolve, reject) => {
-            const connection: Connection = await this.pool.getConnection()
-            const result = await connection.query(
+            const result = await this.pool.query(
                 "SELECT * FROM link WHERE uuid = ?",
                 [uuid]
             )
-            connection.end()
             if (result.length == 0) return resolve(undefined)
             const linkData: LinkData = {
                 uuid: result[0].uuid,
@@ -107,12 +111,10 @@ export class Database {
 
     getPlayerStats(uuid: string): Promise<PlayerStats> {
         return new Promise(async (resolve, reject) => {
-            const connection: Connection = await this.pool.getConnection()
-            const result = await connection.query(
+            const result = await this.pool.query(
                 "SELECT * FROM stats WHERE uuid = ?",
                 [uuid]
             )
-            connection.end()
             if (result.length == 0) return reject("Player not found")
             const stats: PlayerStats = {
                 kills: result[0].kills,
@@ -158,7 +160,8 @@ export interface PlayerData {
     username: string
     nickname: string
     timesjoined: number
-    playtime: number
+    playtimeS: number
+    playtimeO: number
     randomitems: boolean
     chatcolor: string
     gradient: boolean
