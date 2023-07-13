@@ -1,6 +1,6 @@
 {
     "name": "dscbot",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "The discord bot for ClassicDupe",
     "main": "index.js",
     "scripts": {
@@ -8,7 +8,9 @@
         "lint": "eslint --ext .js,.ts .",
         "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
         "build": "tsc",
-        "start": "cd build && node ./index.js"
+        "start": "cd build && node ./index.js",
+        "containerBuild": "docker build -t ghcr.io/classicdupe/discordbot:1.0.1 .",
+        "containerPush": "docker push ghcr.io/classicdupe/discordbot:1.0.1"
     },
     "keywords": [],
     "author": "Prorickey",
