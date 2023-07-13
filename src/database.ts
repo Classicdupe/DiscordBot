@@ -25,6 +25,20 @@ export class Database {
         console.log("Connected to database")
     }
 
+    async loadAllInvites(guild: Guild) {
+        const invites = await guild.invites.fetch()
+        for(let i = 0; i < invites.size; i++) {
+            const invite = invites.at(i) as Invite
+            const result = await this.pool.query("SELECT * FROM invite_codes WHERE code = ?", [invite.code])
+            if(result.length == 0) {
+                this.pool.execute(
+                    "INSERT INTO invite_codes(code, dscid, uses, expires, deleted) VALUES(?, ?, ?, ?, 0)",
+                    [invite.code, invite.inviter?.id, invite.uses, invite.expiresAt]
+                )
+            }
+        }
+    }
+
     async loadAllUsers(guild: Guild) {
         const members = await guild.members.fetch()
         const sortedMembers = 
@@ -40,8 +54,8 @@ export class Database {
             const result = await this.pool.query("SELECT dscid FROM invites WHERE dscid = ?", [member.id])
             if(result.length == 0) {
                 this.pool.execute(
-                    "INSERT INTO invites(dscid, invites, repeats, fakes, extended, legacy, invitedBy, fake, invitedOn, memberNum) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                    [member.id, 0, 0, 0, 0, 0, null, 0, new Date(), i+1]
+                    "INSERT INTO invites(dscid, invites, repeats, fakes, extended, legacy, invitedBy, fake, invitedOn) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                    [member.id, 0, 0, 0, 0, 0, null, 0, new Date()]
                 )
             }
         }

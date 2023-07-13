@@ -1,4 +1,4 @@
-import { EmbedBuilder, GuildMember, Invite, TextChannel } from "discord.js";
+import { Collection, EmbedBuilder, GuildMember, Invite, TextChannel } from "discord.js";
 import { ClassicClient } from "..";
 
 module.exports = async (client: ClassicClient, member: GuildMember) => {
@@ -8,8 +8,10 @@ module.exports = async (client: ClassicClient, member: GuildMember) => {
     const channel: TextChannel = await client.channels.fetch(process.env.ACTIVITY_CHANNEL_ID) as TextChannel
 
     const newInvites = await client.guilds.cache.get(process.env.GUILD_ID)?.invites.fetch()
-    const invite = newInvites?.find(invite => invite.uses as number > (client.invites?.get(invite.code)?.uses as number)) as Invite
+    const invite = newInvites?.find(invite => invite.uses as number > (client.invites.get(invite.code) as number)) as Invite
     const inviter = client.guilds.cache.get(process.env.GUILD_ID)?.members.cache.get(invite?.inviter?.id as string) as GuildMember
+    const invites = await client.guilds.cache.get(process.env.GUILD_ID)?.invites.fetch()
+    client.invites = new Collection(invites?.map(invite => [invite.code, invite.uses as number]))
 
     client.database.newInvite(
         member,

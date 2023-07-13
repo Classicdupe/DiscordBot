@@ -51,5 +51,5 @@ export interface ClassicClient extends Client {
     commandLoader: CommandLoader
     database: Database
     staffIconUrl: string
-    invites: Collection<string, Invite>
+    invites: Collection<string, number>
 }
