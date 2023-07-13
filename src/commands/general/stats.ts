@@ -1,6 +1,11 @@
-import { Client, CommandInteraction, Message, SlashCommandBuilder, User } from "discord.js"
+import {
+    CommandInteraction,
+    Message,
+    SlashCommandBuilder,
+    User
+} from "discord.js"
 import { Command, Permission } from "../../command"
-import { Database, LinkData, PlayerData, PlayerStats } from "../../database"
+import { LinkData, PlayerData, PlayerStats } from "../../database"
 import { EmbedBuilder } from "@discordjs/builders"
 import { ClassicClient } from "../.."
 
@@ -25,7 +30,7 @@ export default class StatsCommand implements Command {
                 .setRequired(false)
         )
         .toJSON()
-    execute(client: ClassicClient, message: Message, command: any, args: any) {
+    execute(client: ClassicClient, message: Message) {
         message.reply("Pong!")
     }
     async slash(client: ClassicClient, interaction: CommandInteraction) {
@@ -53,8 +58,7 @@ export default class StatsCommand implements Command {
                     ? "<@" + linkData.discordId + ">"
                     : "No Discord Account")
 
-            
-            const hours = `0${new Date(playerData.playtimeS).getHours()}`.slice(
+            /*const hours = `0${new Date(playerData.playtimeS).getHours()}`.slice(
                 -2
             )
             const minutes = `0${new Date(
@@ -62,7 +66,7 @@ export default class StatsCommand implements Command {
             ).getMinutes()}`.slice(-2)
             const seconds = `0${new Date(
                 playerData.playtimeS
-            ).getSeconds()}`.slice(-2)
+            ).getSeconds()}`.slice(-2)*/
 
             interaction.reply({
                 embeds: [
@@ -93,7 +97,10 @@ export default class StatsCommand implements Command {
                                 `Playtime: Coming Soon\n` + //${hours}:${minutes}:${seconds}\n` +
                                 linked
                         )
-                        .setFooter({ text: "ClassicDupe Development", iconURL: client.staffIconUrl})
+                        .setFooter({
+                            text: "ClassicDupe Development",
+                            iconURL: client.staffIconUrl
+                        })
                 ]
             })
         } else if (user != null) {
@@ -117,7 +124,7 @@ export default class StatsCommand implements Command {
                 return
             }
 
-            const hours = `0${new Date(playerData.playtimeS).getHours()}`.slice(
+            /*const hours = `0${new Date(playerData.playtimeS).getHours()}`.slice(
                 -2
             )
             const minutes = `0${new Date(
@@ -125,7 +132,7 @@ export default class StatsCommand implements Command {
             ).getMinutes()}`.slice(-2)
             const seconds = `0${new Date(
                 playerData.playtimeS
-            ).getSeconds()}`.slice(-2)
+            ).getSeconds()}`.slice(-2)*/
 
             interaction.reply({
                 embeds: [
@@ -156,7 +163,10 @@ export default class StatsCommand implements Command {
                                 `Playtime: Coming Soon\n` + //${hours}:${minutes}:${seconds}\n` +
                                 `Linked To: <@${linkData.discordId}>`
                         )
-                        .setFooter({ text: "ClassicDupe Development", iconURL: client.staffIconUrl})
+                        .setFooter({
+                            text: "ClassicDupe Development",
+                            iconURL: client.staffIconUrl
+                        })
                 ]
             })
         }

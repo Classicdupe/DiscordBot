@@ -2,7 +2,7 @@ import { readdirSync, lstatSync } from "fs"
 
 export default function searchForFiles(dir: string): string[] {
     const files = readdirSync(dir)
-    let cmds: string[] = []
+    const cmds: string[] = []
     for (const file of files) {
         const stat = lstatSync(`${dir}/${file}`)
         if (stat.isDirectory()) {

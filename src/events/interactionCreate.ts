@@ -1,4 +1,4 @@
-import { Client, Interaction } from "discord.js"
+import { Interaction } from "discord.js"
 import { ClassicClient } from ".."
 
 module.exports = async (client: ClassicClient, interaction: Interaction) => {

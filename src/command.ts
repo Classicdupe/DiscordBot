@@ -1,20 +1,23 @@
 import {
-    Client,
     CommandInteraction,
     Message,
     RESTPostAPIChatInputApplicationCommandsJSONBody
 } from "discord.js"
-import { Database } from "./database"
 import { ClassicClient } from "."
 
-export interface Command {
+export type Command = {
     name: string
     permission: Permission
     description: string
     category: string
     slashCommandBuilder: RESTPostAPIChatInputApplicationCommandsJSONBody
     execute:
-        | ((client: ClassicClient, message: Message, command: any, args: any) => void)
+        | ((
+              client: ClassicClient,
+              message: Message,
+              command: string,
+              args: string[]
+          ) => void)
         | undefined
     slash(client: ClassicClient, interaction: CommandInteraction): void
 }

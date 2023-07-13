@@ -1,31 +1,54 @@
-import { Collection, EmbedBuilder, GuildMember, Invite, TextChannel } from "discord.js";
-import { ClassicClient } from "..";
+import {
+    Collection,
+    EmbedBuilder,
+    GuildMember,
+    Invite,
+    TextChannel
+} from "discord.js"
+import { ClassicClient } from ".."
 
 module.exports = async (client: ClassicClient, member: GuildMember) => {
-    if(!process.env.ACTIVITY_CHANNEL_ID) return
-    if(member.guild.id != process.env.GUILD_ID) return
+    if (!process.env.ACTIVITY_CHANNEL_ID) return
+    if (member.guild.id != process.env.GUILD_ID) return
 
-    const channel: TextChannel = await client.channels.fetch(process.env.ACTIVITY_CHANNEL_ID) as TextChannel
+    const channel: TextChannel = (await client.channels.fetch(
+        process.env.ACTIVITY_CHANNEL_ID
+    )) as TextChannel
 
-    const newInvites = await client.guilds.cache.get(process.env.GUILD_ID)?.invites.fetch()
-    const invite = newInvites?.find(invite => invite.uses as number > (client.invites.get(invite.code) as number)) as Invite
-    const inviter = client.guilds.cache.get(process.env.GUILD_ID)?.members.cache.get(invite?.inviter?.id as string) as GuildMember
-    const invites = await client.guilds.cache.get(process.env.GUILD_ID)?.invites.fetch()
-    client.invites = new Collection(invites?.map(invite => [invite.code, invite.uses as number]))
-
-    client.database.newInvite(
-        member,
-        inviter,
-        invite.code
+    const newInvites = await client.guilds.cache
+        .get(process.env.GUILD_ID)
+        ?.invites.fetch()
+    const invite = newInvites?.find(
+        (invite) =>
+            (invite.uses as number) >
+            (client.invites.get(invite.code) as number)
+    ) as Invite
+    const inviter = client.guilds.cache
+        .get(process.env.GUILD_ID)
+        ?.members.cache.get(invite?.inviter?.id as string) as GuildMember
+    const invites = await client.guilds.cache
+        .get(process.env.GUILD_ID)
+        ?.invites.fetch()
+    client.invites = new Collection(
+        invites?.map((invite) => [invite.code, invite.uses as number])
     )
+
+    client.database.newInvite(member, inviter, invite.code)
 
     const embed = new EmbedBuilder()
         .setTitle(member.user.username + " Joined!")
         .setColor(Math.floor(Math.random() * 16777215))
         .setThumbnail(member.user.avatarURL())
         .setTimestamp()
-        .setFooter({ text: "ClassicDupe Development", iconURL: client.staffIconUrl})
-        .setDescription("Welcome to the server, " + member.user.username + "!\n\nPlay ClassicDupe @ `mc.classicdupe.com` on `1.20.1`!")
+        .setFooter({
+            text: "ClassicDupe Development",
+            iconURL: client.staffIconUrl
+        })
+        .setDescription(
+            "Welcome to the server, " +
+                member.user.username +
+                "!\n\nPlay ClassicDupe @ `mc.classicdupe.com` on `1.20.1`!"
+        )
         .addFields(
             {
                 name: "Links To Check Out!",
@@ -43,15 +66,16 @@ module.exports = async (client: ClassicClient, member: GuildMember) => {
             }
         )
 
-    if(!inviter.user.bot) {
-        embed.addFields(
-            {
-                name: "Invited By " + inviter.user.username,
-                value: inviter.user.username + " has invited a total of " + (await client.database.getInviteData(inviter.id)).invites + " members!"
-            }
-        )
+    if (!inviter.user.bot) {
+        embed.addFields({
+            name: "Invited By " + inviter.user.username,
+            value:
+                inviter.user.username +
+                " has invited a total of " +
+                (await client.database.getInviteData(inviter.id)).invites +
+                " members!"
+        })
     }
 
     channel.send({ embeds: [embed] })
-
 }

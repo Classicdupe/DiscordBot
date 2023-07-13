@@ -1,5 +1,9 @@
 import { Command } from "./command"
-import { REST, Routes } from "discord.js"
+import {
+    REST,
+    RESTPostAPIChatInputApplicationCommandsJSONBody,
+    Routes
+} from "discord.js"
 import searchForFIles from "./utils/searchForFiles"
 
 export class CommandLoader {
@@ -28,15 +32,15 @@ export class CommandLoader {
     }
 
     public loadCommands() {
-        searchForFIles("./commands").forEach((file: string) => {
-            const command: Command = new (require(file).default)()
+        searchForFIles("./commands").forEach(async (file: string) => {
+            const command: Command = new (await import(file)).default()
             this.commands.set(command.name, command)
         })
     }
 
     public async deployCommands() {
         const rest = new REST().setToken(this.token)
-        let cmds: any = []
+        const cmds: RESTPostAPIChatInputApplicationCommandsJSONBody[] = []
         for (const command of this.commands.values())
             cmds.push(command.slashCommandBuilder)
         await rest.put(

@@ -1,4 +1,4 @@
-import { Client, CommandInteraction, Message, SlashCommandBuilder } from "discord.js"
+import { CommandInteraction, Message, SlashCommandBuilder } from "discord.js"
 import { Command, Permission } from "../../command"
 import { ClassicClient } from "../.."
 
@@ -11,7 +11,7 @@ export default class PingCommand implements Command {
         .setName(this.name)
         .setDescription(this.description)
         .toJSON()
-    execute(client: ClassicClient, message: Message, command: any, args: any) {
+    execute(client: ClassicClient, message: Message) {
         message.reply("Pong!")
     }
     slash(client: ClassicClient, interaction: CommandInteraction) {

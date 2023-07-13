@@ -1,14 +1,14 @@
-import { Client, Collection, IntentsBitField, Invite, Message } from "discord.js"
+import { Client, Collection, IntentsBitField } from "discord.js"
 import { CommandLoader } from "./commandLoader"
-import { Database } from "./database";
-import { config } from "dotenv";
-import searchForFiles from "./utils/searchForFiles";
+import { Database } from "./database"
+import { config } from "dotenv"
+import searchForFiles from "./utils/searchForFiles"
 
 config({
     path: "./../resources/.env"
 })
 
-let clientBuilder: any = new Client({
+const client = new Client({
     intents: [
         IntentsBitField.Flags.AutoModerationConfiguration,
         IntentsBitField.Flags.AutoModerationExecution,
@@ -30,24 +30,23 @@ let clientBuilder: any = new Client({
         IntentsBitField.Flags.Guilds,
         IntentsBitField.Flags.MessageContent
     ]
-})
+}) as ClassicClient
 
-clientBuilder.commandLoader = new CommandLoader()
-clientBuilder.database = new Database()
-clientBuilder.staffIconUrl = "https://cdn.discordapp.com/attachments/1068991910380839075/1128878013031923864/StaffLogo.png"
+client.commandLoader = new CommandLoader()
+client.database = new Database()
+client.staffIconUrl =
+    "https://cdn.discordapp.com/attachments/1068991910380839075/1128878013031923864/StaffLogo.png"
 
-const client: ClassicClient = clientBuilder
-
-searchForFiles("./events").forEach((file) => {
-    const event = require(file)
-    const name = file.split('/').slice(-1).pop()?.split('.')[0]
-    if(!name) return
+searchForFiles("./events").forEach(async (file) => {
+    const event = await import(file)
+    const name = file.split("/").slice(-1).pop()?.split(".")[0]
+    if (!name) return
     client.on(name, event.bind(null, client))
 })
 
 client.login(process.env.TOKEN)
 
-export interface ClassicClient extends Client {
+export type ClassicClient = Client & {
     commandLoader: CommandLoader
     database: Database
     staffIconUrl: string
