@@ -1,4 +1,4 @@
-import { Client, CommandInteraction, SlashCommandBuilder, User } from "discord.js"
+import { Client, CommandInteraction, Message, SlashCommandBuilder, User } from "discord.js"
 import { Command, Permission } from "../../command"
 import { Database, LinkData, PlayerData, PlayerStats } from "../../database"
 import { EmbedBuilder } from "@discordjs/builders"
@@ -25,7 +25,7 @@ export default class StatsCommand implements Command {
                 .setRequired(false)
         )
         .toJSON()
-    execute(message: any, args: any) {
+    execute(client: ClassicClient, message: Message, command: any, args: any) {
         message.reply("Pong!")
     }
     async slash(client: ClassicClient, interaction: CommandInteraction) {
@@ -93,6 +93,7 @@ export default class StatsCommand implements Command {
                                 `Playtime: Coming Soon\n` + //${hours}:${minutes}:${seconds}\n` +
                                 linked
                         )
+                        .setFooter({ text: "ClassicDupe Development", iconURL: client.staffIconUrl})
                 ]
             })
         } else if (user != null) {
@@ -155,6 +156,7 @@ export default class StatsCommand implements Command {
                                 `Playtime: Coming Soon\n` + //${hours}:${minutes}:${seconds}\n` +
                                 `Linked To: <@${linkData.discordId}>`
                         )
+                        .setFooter({ text: "ClassicDupe Development", iconURL: client.staffIconUrl})
                 ]
             })
         }

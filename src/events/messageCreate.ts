@@ -9,5 +9,5 @@ module.exports = async (client: ClassicClient, msg: Message) => {
 
     const command = client.commandLoader.getCommand(cmd)
     if (command && command.execute != undefined)
-        command.execute(client, msg, args)
+        command.execute(client, msg, cmd, args)
 }

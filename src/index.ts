@@ -1,4 +1,4 @@
-import { Client, IntentsBitField, Message } from "discord.js"
+import { Client, Collection, IntentsBitField, Invite, Message } from "discord.js"
 import { CommandLoader } from "./commandLoader"
 import { Database } from "./database";
 import { config } from "dotenv";
@@ -34,6 +34,7 @@ let clientBuilder: any = new Client({
 
 clientBuilder.commandLoader = new CommandLoader()
 clientBuilder.database = new Database()
+clientBuilder.staffIconUrl = "https://cdn.discordapp.com/attachments/1068991910380839075/1128878013031923864/StaffLogo.png"
 
 const client: ClassicClient = clientBuilder
 
@@ -49,4 +50,6 @@ client.login(process.env.TOKEN)
 export interface ClassicClient extends Client {
     commandLoader: CommandLoader
     database: Database
+    staffIconUrl: string
+    invites: Collection<string, Invite>
 }

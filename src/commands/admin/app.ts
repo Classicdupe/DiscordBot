@@ -74,12 +74,20 @@ export default class AppCommand implements Command {
                                 "name": "Staff Discord",
                                 "value": "This discord server is starting to get cluttered with staff resources, so we have created a staff discord. [Click Me To Join!](https://discord.gg/c9bQwRD2s)"
                             }
-                        ]
+                        ],
+                        "footer": {
+                            "text": "ClassicDupe Development",
+                            "icon_url": client.staffIconUrl
+                        }
                     },
                     {
                         "title": `Your Commands and Abilities`,
                         "description": `Here is a guide of what permissions and commands you have access to and what they do. Look below at the plugin pages for more in depth explanations on how to use the plugins.\n\nAntiCheat - Vulcan\nhttps://www.spigotmc.org/resources/vulcan-anti-cheat-advanced-cheat-detection-1-7-1-19-3.83626/\n\nModeration Plugin - LibertyBans\nhttps://docs.libertybans.org/#/Getting-Started\n\nVanish Plugin - SuperVanish\nhttps://www.spigotmc.org/resources/supervanish-be-invisible.1331/\n\nCoreProtect - https://docs.coreprotect.net/commands/\n\nFAWE - https://intellectualsites.github.io/fastasyncworldedit-documentation/basic-commands/main-commands-and-permissions.html`,
-                        "color": 0x03b120
+                        "color": 0x03b120,
+                        "footer": {
+                            "text": "ClassicDupe Development",
+                            "icon_url": client.staffIconUrl
+                        }
                     }
                 ]
             })
@@ -89,17 +97,29 @@ export default class AppCommand implements Command {
                     {
                         "title": `SrAdmin`,
                         "description": `You have * perms on the dupe server level`,
-                        "color": 0xEE6244
+                        "color": 0xEE6244,
+                        "footer": {
+                            "text": "ClassicDupe Development",
+                            "icon_url": client.staffIconUrl
+                        }
                     },
                     {
                         "title": `Admin Pt1`,
                         "description": `**You have all the previous roles permissions.**\n\n**OpenInv**\nYou may now edit the inventories and ender chests of other players\n\n**FAWE <Worldedit>**\n//wand - Get the wand object\n//hpos1 - Set position 1 to targeted block\n//hpos2 - Set position 2 to targeted block\n//outset [-h] [-v] <amount> - Expand the selection\n//inset [-h] [-v] <amount> - Shrink the selection\n//distr - Get the distribution of blocks in the selection\n//chunk - Set the selection to the current chunk you are in\n//pos1 - Set position 1\n//pos2 - Set position 2\n//contract <amount> [reverseAmount] [direction] - Contract the selection area\n//shift <amount> [direction] - Shift the selection area\n//expand <vert|<amount> [reverseAmount] [direction]> - Expand the selection area\n//size [-c] - Get information about the selection\n//count <mask> - Counts the number of blocks matching a mask\n//undo - Undo whatever you just did\n//move [-abes] [multiplier] [offset] [replace] [-m <mask>] - Move the contents of the selection\n//line [-h] <pattern> [thickness] - Draws line segments between cuboid selection corners or convex polyhedral selection vertices\n//overlay <pattern> - Set a block on top of blocks in the region\n//curve [-h] <pattern> [thickness] - Draws a spline through selected points\n//center <pattern> - Set the center block<s>`,
-                        "color": 0xff4545
+                        "color": 0xff4545,
+                        "footer": {
+                            "text": "ClassicDupe Development",
+                            "icon_url": client.staffIconUrl
+                        }
                     },
                     {
                         "title": `Admin Pt2`,
                         "description": `//faces <pattern> - Build the walls, ceiling, and floor of a selection\n//hollow [thickness] [pattern] - Hollows out the object contained in this selection\n//set <pattern> - Sets all the blocks in the region\n//stack [-abers] [count] [offset] [-m <mask>] - Repeat the contents of the selection\n//replace [from] <to> - Replace all blocks in the selection with another\n//fill <pattern> <radius> [depth] - Fill a hole\n//drain [-w] <radius> - Drain a pool\n/removenear <mask> [radius] - Remove blocks near you.\n/fixlava <radius> - Fix lava to be stationary\n/removeabove [size] [height] - Remove blocks above your head.\n//fillr <pattern> <radius> [depth] - Fill a hole recursively\n/replacenear <radius> [from] <to> - Replace nearby blocks\n/fixwater <radius> - Fix water to be stationary\n//calculate <input...> - Evaluate a mathematical expression\n/extinguish [radius] - Extinguish nearby fire\n//copy [-be] [-m <mask>] - Copy the selection to the clipboard\n//flip [direction] - Flip the contents of the clipboard across the origin\n//rotate <rotateY> [rotateX] [rotateZ] - Rotate the contents of the clipboard\n//cut [-be] [leavePattern] [-m <mask>] - Cut the selection to the clipboard\n//paste [-abenos] [-m <sourceMask>] - Paste the clipboard’s contents\n/clearclipboard - Clear your clipboard\n/listchunks [-p <page>] - List chunks that your selection includes\n/chunkinfo - Get information about the chunk you’re inside\n\n**Permissions**\nworldedit.wand - worldedit.wand.toggle - worldedit.selection.hpos - worldedit.selection.outset - worldedit.selection.hpos - worldedit.selection.inset - worldedit.analysis.distr - worldedit.selection.chunk - worldedit.selection.pos - worldedit.selection.pos - worldedit.selection.contract - worldedit.selection.shift - worldedit.selection.expand - worldedit.selection.size - worldedit.analysis.count - worldedit.tool.inspect - worldedit.history.undo - worldedit.history.rollback - worldedit.region.move - worldedit.region.line - worldedit.light.fix - worldedit.region.overlay - worldedit.region.overlay - worldedit.region.curve - worldedit.light.set - worldedit.nbtinfo - worldedit.light.set - worldedit.region.center - worldedit.region.faces - worldedit.region.hollow - worldedit.region.fall - worldedit.region.set - worldedit.region.stack - worldedit.region.replace - worldedit.fill - worldedit.drain - worldedit.removenear - worldedit.fixlava - worldedit.removeabove - worldedit.masks - worldedit.fill.recursive - worldedit.replacenear - worldedit.fixwater - fawe.confirm - worldedit.calc - worldedit.extinguish - worldedit.clipboard.copy - worldedit.clipboard.flip - worldedit.clipboard.rotate - worldedit.clipboard.lazycopy - worldedit.clipboard.asset - worldedit.clipboard.cut - worldedit.clipboard.download - worldedit.clipboard.paste - worldedit.clipboard.lazycut - worldedit.clipboard.place - worldedit.clipboard.clear - worldedit.listchunks - worldedit.chunkinfo`,
-                        "color": 0xff4545
+                        "color": 0xff4545,
+                        "footer": {
+                            "text": "ClassicDupe Development",
+                            "icon_url": client.staffIconUrl
+                        }
                     },
                 ]
             })
@@ -109,12 +129,20 @@ export default class AppCommand implements Command {
                     {
                         "title": `JrAdmin`,
                         "description": `**You have all the previous roles permissions.**\n\n**Vulcan** \n/vulcan menu/vulcan gui - Open Vulcan's GUI.\n/vulcan connection (player) - Shows connection info about a player.\n\n**CoreProtect**\n/co rb/co rollback u:<user> t:<time> r:<radius> a:<action> i:<include> e:<exclude> - Rollback a player's block interactions (can also just rollback in general)\n/co rs/co restore u:<user> t:<time> r:<radius> a:<action> i:<include> e:<exclude> - Undo rollbacks\n/co consumer - Pause or resume consumer queue processing\n/co status - View plugin info, and version info.\n\n**OpenInv**\n/openinv/oi/inv/open (player) - See the inventory of the specified player\n/openender/oe (player) - See the ender chest of the specified player\n/searchinv/si (item) (minamount) - List all players that have this specific item in their inventory\n/searchender/se (item) (minamount) - List all players that have this specific item in their ender chest\n/searchenchant/searchenchants (enchantment) (minlevel) - List all online players that have this specific enchantment\n/anycontainer/ac/anychest - toggle AnyContainer mode (blocked container bypass)\n/silentcontainer/sc/silent/silentchest - Toggles SilentContainer mode (open containers silently)\n\n**Maintenance**\nAllows you to bypass the maintenence mode on the server.\n\n**Permissions**\nvulcan.connection - vulcan.gui - coreprotect.rollback - coreprotect.restore - coreprotect.status - coreprotect.consumer - OpenInv.openinv - OpenInv.openself - OpenInv.openender - OpenInv.openenderall - OpenInv.search - OpenInv.searchenchant - OpenInv.crossworld - OpenInv.anychest - OpenInv.silent - maintenance.bypass`,
-                        "color": 0xF3AD1D
+                        "color": 0xF3AD1D,
+                        "footer": {
+                            "text": "ClassicDupe Development",
+                            "icon_url": client.staffIconUrl
+                        }
                     },
                     {
                         "title": `SrMod`,
                         "description": `**You have all the previous roles permissions.**\n\n**Vulcan**\n/jday add (player) - Adds a player to Judgement Day\n/jday execute - Executes Judgement Day\n/vulcan knockback/vulcan kb (player) - Test a player for anti-knockback\n/vulcan reset - Reset violations of all online players.\n/vulcan freeze - Freeze a player, disallowing them of moving.\n\n**LibertyBans**\n/accounthistory list (player) - Get a list of known accounts related to this player\n/accounthistory delete (player) - Delete the list of known accounts related to this player\n\n**ClassicDupe**\n/broadcast (text) - Broadcast a message to the server\n\n**CoreProtect**\n/co i/co inspect - Toggles inspect mode\n/co lookup/co l u:<user> t:<time> r:<radius> a:<action> i:<include> e:<exclude> - See history of player's interactions with blocks\n/co help - Coreprotect's help command\n\n**Permissions**\nvulcan.jday - vulcan.knockback - vulcan.reset - vulcan.freeze - libertybans.alts.accounthistory - libertybans.alts.accounthistory.delete - libertybans.alts.accounthistory.list - mod.broadcast - coreprotect.inspect - coreprotect.lookup - coreprotect.teleport - coreprotect.help - coreprotect.co - coreprotect.core - coreprotect.coreprotect\n\n`,
-                        "color": 0xFF49E6
+                        "color": 0xFF49E6,
+                        "footer": {
+                            "text": "ClassicDupe Development",
+                            "icon_url": client.staffIconUrl
+                        }
                     }
                 ]
             })
@@ -166,7 +194,11 @@ export default class AppCommand implements Command {
                                     : "No reason provided",
                                 inline: true
                             }
-                        ]
+                        ],
+                        "footer": {
+                            "text": "ClassicDupe Development",
+                            "icon_url": client.staffIconUrl
+                        }
                     }
                 ]
             })
