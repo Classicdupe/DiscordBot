@@ -1,6 +1,6 @@
-import { CommandInteraction, SlashCommandBuilder } from "discord.js"
+import { Client, CommandInteraction, SlashCommandBuilder } from "discord.js"
 import { Command, Permission } from "../../command"
-import { ImportantStuff } from "../.."
+import { Database } from "../../database"
 
 export default class PingCommand implements Command {
     name = "ping"
@@ -14,7 +14,7 @@ export default class PingCommand implements Command {
     execute(message: any, args: any) {
         message.reply("Pong!")
     }
-    slash(imstuff: ImportantStuff, interaction: CommandInteraction) {
+    slash(client: Client, interaction: CommandInteraction) {
         interaction.reply("Pong!")
     }
 }

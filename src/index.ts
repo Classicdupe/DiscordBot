@@ -2,14 +2,13 @@ import { Client, IntentsBitField, Message } from "discord.js"
 import { CommandLoader } from "./commandLoader"
 import { Database } from "./database";
 import { config } from "dotenv";
+import searchForFiles from "./utils/searchForFiles";
 
 config({
     path: "./../resources/.env"
 })
 
-const database = new Database()
-
-const client = new Client({
+let clientBuilder: any = new Client({
     intents: [
         IntentsBitField.Flags.AutoModerationConfiguration,
         IntentsBitField.Flags.AutoModerationExecution,
@@ -33,39 +32,21 @@ const client = new Client({
     ]
 })
 
-const commandLoader = new CommandLoader()
+clientBuilder.commandLoader = new CommandLoader()
+clientBuilder.database = new Database()
 
-const importantStuff: ImportantStuff = {
-    bot: client,
-    database: database
-}
+const client: ClassicClient = clientBuilder
 
-client.on("ready", () => {
-    console.log("Discord bot is now online")
+searchForFiles("./events").forEach((file) => {
+    const event = require(file)
+    const name = file.split('/').slice(-1).pop()?.split('.')[0]
+    if(!name) return
+    client.on(name, event.bind(null, client))
 })
 
-client.on("interactionCreate", async (interaction) => {
-    if (!interaction.isCommand()) return
-    const command = commandLoader.getCommand(interaction.commandName)
-    if (command) command.slash(importantStuff, interaction)
-})
+client.login(process.env.TOKEN)
 
-client.on("messageCreate", async (msg: Message) => {
-    if (msg.author.bot) return
-    if (!msg.content.startsWith("!")) return
-    const cmd = msg.content.slice(1).trim().split(/ +/g)[0]
-    const args = msg.content.slice(1).trim().split(/ +/g).slice(1)
-
-    const command = commandLoader.getCommand(cmd)
-    if (command && command.execute != undefined)
-        command.execute(importantStuff, msg, args)
-})
-
-client.login(process.env.TOKEN).then(() =>
-    console.log("ClassicDupe Application bot is now online")
-)
-
-export interface ImportantStuff {
-    bot: Client
+export interface ClassicClient extends Client {
+    commandLoader: CommandLoader
     database: Database
 }

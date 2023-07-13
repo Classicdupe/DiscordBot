@@ -1,8 +1,8 @@
-import { CommandInteraction, SlashCommandBuilder, User } from "discord.js"
+import { Client, CommandInteraction, SlashCommandBuilder, User } from "discord.js"
 import { Command, Permission } from "../../command"
-import { ImportantStuff } from "../.."
-import { LinkData, PlayerData, PlayerStats } from "../../database"
+import { Database, LinkData, PlayerData, PlayerStats } from "../../database"
 import { EmbedBuilder } from "@discordjs/builders"
+import { ClassicClient } from "../.."
 
 export default class StatsCommand implements Command {
     name = "stats"
@@ -28,19 +28,19 @@ export default class StatsCommand implements Command {
     execute(message: any, args: any) {
         message.reply("Pong!")
     }
-    async slash(imstuff: ImportantStuff, interaction: CommandInteraction) {
+    async slash(client: ClassicClient, interaction: CommandInteraction) {
         const player = interaction.options.get("player")
         const user = interaction.options.get("user")
 
         if (player != null) {
             const playerData: PlayerData =
-                await imstuff.database.getPlayerDataByName(
+                await client.database.getPlayerDataByName(
                     player.value as string
                 )
             const playerStats: PlayerStats =
-                await imstuff.database.getPlayerStats(playerData.uuid)
+                await client.database.getPlayerStats(playerData.uuid)
             const linkData: LinkData | undefined =
-                await imstuff.database.getLinkDataByUUID(playerData.uuid)
+                await client.database.getLinkDataByUUID(playerData.uuid)
 
             if (playerStats == null) {
                 interaction.reply("Player not found")
@@ -97,7 +97,7 @@ export default class StatsCommand implements Command {
             })
         } else if (user != null) {
             const linkData: LinkData | undefined =
-                await imstuff.database.getLinkDataByDiscord(
+                await client.database.getLinkDataByDiscord(
                     (user.user as User).id.toString()
                 )
 
@@ -107,9 +107,9 @@ export default class StatsCommand implements Command {
             }
 
             const playerData: PlayerData =
-                await imstuff.database.getPlayerDataByUUID(linkData.uuid)
+                await client.database.getPlayerDataByUUID(linkData.uuid)
             const playerStats: PlayerStats =
-                await imstuff.database.getPlayerStats(linkData.uuid)
+                await client.database.getPlayerStats(linkData.uuid)
 
             if (playerStats == null) {
                 interaction.reply("Player not found")
