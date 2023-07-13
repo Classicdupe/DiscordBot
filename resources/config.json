@@ -1,0 +1,17 @@
+{
+    "clientId": "1078102834874167356",
+    "staffIcon": "https://cdn.discordapp.com/attachments/1068991910380839075/1128878013031923864/StaffLogo.png",
+    "main": {
+        "guildId": "1068991438391623836",
+        "channels": {
+            "activity": "1088928808058491034",
+            "info": "1068991976587935815"
+        }
+    },
+    "database": {
+        "host": "68.110.215.237",
+        "username": "classicdupe",
+        "password": "LNWnNwZHy7xdFMw7rah9",
+        "database": "classicdupe"
+    }
+}

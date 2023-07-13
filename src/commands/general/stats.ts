@@ -99,7 +99,7 @@ export default class StatsCommand implements Command {
                         )
                         .setFooter({
                             text: "ClassicDupe Development",
-                            iconURL: client.staffIconUrl
+                            iconURL: client.config.staffIcon
                         })
                 ]
             })
@@ -165,7 +165,7 @@ export default class StatsCommand implements Command {
                         )
                         .setFooter({
                             text: "ClassicDupe Development",
-                            iconURL: client.staffIconUrl
+                            iconURL: client.config.staffIcon
                         })
                 ]
             })

@@ -5,6 +5,7 @@ import {
     Routes
 } from "discord.js"
 import searchForFIles from "./utils/searchForFiles"
+import { Config } from "."
 
 export class CommandLoader {
     public token: string
@@ -12,15 +13,12 @@ export class CommandLoader {
     public guildId: string
     public commands: Map<string, Command> = new Map()
 
-    constructor() {
+    constructor(config: Config) {
         if (!process.env.TOKEN) throw new Error("No token provided")
         this.token = process.env.TOKEN
 
-        if (!process.env.CLIENT_ID) throw new Error("No client id provided")
-        this.clientId = process.env.CLIENT_ID
-
-        if (!process.env.GUILD_ID) throw new Error("No guild id provided")
-        this.guildId = process.env.GUILD_ID
+        this.clientId = config.clientId
+        this.guildId = config.main.guildId
 
         this.loadCommands()
         console.log("Loaded commands")

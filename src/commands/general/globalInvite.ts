@@ -37,7 +37,7 @@ async function generateEmbed(client: ClassicClient): Promise<EmbedBuilder> {
         .setColor(0x33adff)
         .setFooter({
             text: "ClassicDupe Development",
-            iconURL: client.staffIconUrl
+            iconURL: client.config.staffIcon
         })
 
     return embed

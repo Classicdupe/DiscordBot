@@ -1,21 +1,16 @@
 import { Guild, GuildMember, Invite, TextChannel } from "discord.js"
-import { readFileSync } from "fs"
 import { createPool } from "mariadb"
-import { ClassicClient } from "."
+import { ClassicClient, Config } from "."
 
 export class Database {
     pool
 
-    constructor() {
-        const dbdata: DatabaseData = JSON.parse(
-            readFileSync("../resources/database.json", "utf-8")
-        )
-
+    constructor(config: Config) {
         this.pool = createPool({
-            host: dbdata.host,
-            user: dbdata.username,
-            password: dbdata.password,
-            database: dbdata.database
+            host: config.database.host,
+            user: config.database.username,
+            password: config.database.password,
+            database: config.database.database
         })
 
         this.pool.execute(
@@ -84,11 +79,9 @@ export class Database {
      */
     getGlobalInvite(client: ClassicClient): Promise<Invite> {
         return new Promise((resolve) => {
-            const guild = client.guilds.cache.get(
-                process.env.GUILD_ID as string
-            )
+            const guild = client.guilds.cache.get(client.config.main.guildId)
             const infoChannel = guild?.channels.cache.get(
-                process.env.INFO_CHANNEL_ID as string
+                client.config.main.channels.info
             ) as TextChannel
             this.pool.query("SELECT code FROM globalInvites").then((result) => {
                 if (result.length == 0) {
@@ -479,11 +472,4 @@ export type PlayerStats = {
     kills: number
     deaths: number
     kdr: number
-}
-
-type DatabaseData = {
-    host: string
-    username: string
-    password: string
-    database: string
 }

@@ -1,12 +1,17 @@
 import { Client, Collection, IntentsBitField } from "discord.js"
 import { CommandLoader } from "./commandLoader"
 import { Database } from "./database"
-import { config } from "dotenv"
+import { readFileSync } from "fs"
+import dotenv from "dotenv"
 import searchForFiles from "./utils/searchForFiles"
 
-config({
+dotenv.config({
     path: "./../resources/.env"
 })
+
+const config: Config = JSON.parse(
+    readFileSync("../resources/config.json", "utf-8")
+)
 
 const client = new Client({
     intents: [
@@ -32,10 +37,9 @@ const client = new Client({
     ]
 }) as ClassicClient
 
-client.commandLoader = new CommandLoader()
-client.database = new Database()
-client.staffIconUrl =
-    "https://cdn.discordapp.com/attachments/1068991910380839075/1128878013031923864/StaffLogo.png"
+client.commandLoader = new CommandLoader(config)
+client.database = new Database(config)
+client.config = config
 
 searchForFiles("./events").forEach(async (file) => {
     const event = await import(file)
@@ -49,6 +53,26 @@ client.login(process.env.TOKEN)
 export type ClassicClient = Client & {
     commandLoader: CommandLoader
     database: Database
-    staffIconUrl: string
     invites: Collection<string, number>
+    config: Config
+}
+
+export type Config = {
+    clientId: string
+    staffIcon: string
+    main: {
+        guildId: string
+        channels: {
+            activity: string
+            info: string
+        }
+    }
+    database: DatabaseData
+}
+
+export type DatabaseData = {
+    host: string
+    username: string
+    password: string
+    database: string
 }

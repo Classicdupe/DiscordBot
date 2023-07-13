@@ -4,18 +4,17 @@ import { ClassicClient } from ".."
 module.exports = async (client: ClassicClient) => {
     console.log("Discord bot is now online")
 
-    if (!process.env.GUILD_ID) return
     const invites = await client.guilds.cache
-        .get(process.env.GUILD_ID)
+        .get(client.config.main.guildId)
         ?.invites.fetch()
     client.invites = new Collection(
         invites?.map((invite) => [invite.code, invite.uses as number])
     )
 
     client.database.loadAllUsers(
-        client.guilds.cache.get(process.env.GUILD_ID) as Guild
+        client.guilds.cache.get(client.config.main.guildId) as Guild
     )
     client.database.loadAllInvites(
-        client.guilds.cache.get(process.env.GUILD_ID) as Guild
+        client.guilds.cache.get(client.config.main.guildId) as Guild
     )
 }

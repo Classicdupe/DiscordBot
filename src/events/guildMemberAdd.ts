@@ -8,15 +8,12 @@ import {
 import { ClassicClient } from ".."
 
 module.exports = async (client: ClassicClient, member: GuildMember) => {
-    if (!process.env.ACTIVITY_CHANNEL_ID) return
-    if (member.guild.id != process.env.GUILD_ID) return
-
     const channel: TextChannel = (await client.channels.fetch(
-        process.env.ACTIVITY_CHANNEL_ID
+        client.config.main.channels.activity
     )) as TextChannel
 
     const newInvites = await client.guilds.cache
-        .get(process.env.GUILD_ID)
+        .get(client.config.main.guildId)
         ?.invites.fetch()
     const invite = newInvites?.find(
         (invite) =>
@@ -24,10 +21,10 @@ module.exports = async (client: ClassicClient, member: GuildMember) => {
             (client.invites.get(invite.code) as number)
     ) as Invite
     const inviter = client.guilds.cache
-        .get(process.env.GUILD_ID)
+        .get(client.config.main.guildId)
         ?.members.cache.get(invite?.inviter?.id as string) as GuildMember
     const invites = await client.guilds.cache
-        .get(process.env.GUILD_ID)
+        .get(client.config.main.guildId)
         ?.invites.fetch()
     client.invites = new Collection(
         invites?.map((invite) => [invite.code, invite.uses as number])
@@ -42,7 +39,7 @@ module.exports = async (client: ClassicClient, member: GuildMember) => {
         .setTimestamp()
         .setFooter({
             text: "ClassicDupe Development",
-            iconURL: client.staffIconUrl
+            iconURL: client.config.staffIcon
         })
         .setDescription(
             "Welcome to the server, " +

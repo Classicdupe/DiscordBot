@@ -75,7 +75,7 @@ export default class AppCommand implements Command {
                         ],
                         footer: {
                             text: "ClassicDupe Development",
-                            icon_url: client.staffIconUrl
+                            icon_url: client.config.staffIcon
                         }
                     },
                     {
@@ -84,7 +84,7 @@ export default class AppCommand implements Command {
                         color: 0x03b120,
                         footer: {
                             text: "ClassicDupe Development",
-                            icon_url: client.staffIconUrl
+                            icon_url: client.config.staffIcon
                         }
                     }
                 ]
@@ -98,7 +98,7 @@ export default class AppCommand implements Command {
                         color: 0xee6244,
                         footer: {
                             text: "ClassicDupe Development",
-                            icon_url: client.staffIconUrl
+                            icon_url: client.config.staffIcon
                         }
                     },
                     {
@@ -107,7 +107,7 @@ export default class AppCommand implements Command {
                         color: 0xff4545,
                         footer: {
                             text: "ClassicDupe Development",
-                            icon_url: client.staffIconUrl
+                            icon_url: client.config.staffIcon
                         }
                     },
                     {
@@ -116,7 +116,7 @@ export default class AppCommand implements Command {
                         color: 0xff4545,
                         footer: {
                             text: "ClassicDupe Development",
-                            icon_url: client.staffIconUrl
+                            icon_url: client.config.staffIcon
                         }
                     }
                 ]
@@ -130,7 +130,7 @@ export default class AppCommand implements Command {
                         color: 0xf3ad1d,
                         footer: {
                             text: "ClassicDupe Development",
-                            icon_url: client.staffIconUrl
+                            icon_url: client.config.staffIcon
                         }
                     },
                     {
@@ -139,7 +139,7 @@ export default class AppCommand implements Command {
                         color: 0xff49e6,
                         footer: {
                             text: "ClassicDupe Development",
-                            icon_url: client.staffIconUrl
+                            icon_url: client.config.staffIcon
                         }
                     }
                 ]
@@ -206,7 +206,7 @@ export default class AppCommand implements Command {
                         ],
                         footer: {
                             text: "ClassicDupe Development",
-                            icon_url: client.staffIconUrl
+                            icon_url: client.config.staffIcon
                         }
                     }
                 ]
