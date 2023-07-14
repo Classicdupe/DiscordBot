@@ -1,4 +1,6 @@
 import {
+    ChatInputApplicationCommandData,
+    ChatInputCommandInteraction,
     CommandInteraction,
     Message,
     RESTPostAPIChatInputApplicationCommandsJSONBody
@@ -20,7 +22,7 @@ export type Command = {
               args: string[]
           ) => void)
         | undefined
-    slash(client: ClassicClient, interaction: CommandInteraction): void
+    slash(client: ClassicClient, interaction: ChatInputCommandInteraction): void
 }
 
 export enum Permission {

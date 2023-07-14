@@ -4,10 +4,10 @@ import {
     Message,
     SlashCommandBuilder
 } from "discord.js"
-import { Command, Permission } from "../../../command"
-import { ClassicClient } from "../../.."
+import { Command, Permission } from "../../command"
+import { ClassicClient } from "../.."
 import ytdl from "ytdl-core"
-import { MusicPlayer } from "../../../utils/musicPlayer"
+import { MusicPlayer } from "../../utils/musicPlayer"
 
 export default class PlayCommand implements Command {
     name = "play"
@@ -27,8 +27,47 @@ export default class PlayCommand implements Command {
                 .setRequired(true)
         )
         .toJSON()
-    execute(client: ClassicClient, message: Message) {
-        message.reply("Pong!")
+    async execute(client: ClassicClient, message: Message, command: string, args: string[]) {
+        if(args.length != 1) return message.reply({
+                content: "Invalid usage, please use `!play <youtube url>`"})
+        const songUrl = args[0]
+        const member = message.member as GuildMember
+
+        if (!member.voice.channel)
+            return message.reply({
+                content: "You need to be in a voice channel to play music"
+            })
+
+        let musicPlayer: MusicPlayer = {} as MusicPlayer
+        if (!client.musicPlayers.has(member.guild.id)) {
+            const voiceChannel = member.voice.channel
+            musicPlayer = new MusicPlayer(client, voiceChannel)
+            client.musicPlayers.set(member.guild.id, musicPlayer)
+        } else if (
+            member.voice.channelId !=
+            client.musicPlayers.get(member.guild.id)?.channel.id
+        )
+            return message.reply({
+                content: "You need to be in the same voice channel as the bot"
+            })
+        else
+            musicPlayer = client.musicPlayers.get(
+                member.guild.id
+            ) as MusicPlayer
+
+        const valid = ytdl.validateURL(songUrl)
+        if (!valid)
+            return message.reply({
+                content: "Invalid youtube url"
+            })
+
+        musicPlayer.queueAdd(songUrl)
+
+        const basicInfo = await ytdl.getInfo(songUrl)
+
+        message.reply({
+            content: `Added ${basicInfo.videoDetails.title} to the queue`
+        })
     }
     async slash(client: ClassicClient, interaction: CommandInteraction) {
         const songUrl = interaction.options.get("songurl")?.value as string

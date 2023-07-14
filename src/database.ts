@@ -179,7 +179,7 @@ export class Database {
         )
         if (result.length == 0) {
             this.pool.execute(
-                "INSERT INTO invites(dscid, invites, repeats, fakes, extended, legacy, invitedBy, invitedOn, memberNum) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO invites(dscid, invites, repeats, fakes, extended, legacy, invitedBy, invitedOn) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                 [invitee.id, 0, 0, 0, 0, 1, inviter.id, 0, new Date()]
             )
             if (inviter.user.bot) {
