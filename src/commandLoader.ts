@@ -11,6 +11,7 @@ export class CommandLoader {
     public token: string
     public clientId: string
     public guildId: string
+    public staffGuildId: string
     public commands: Map<string, Command> = new Map()
 
     constructor(config: Config) {
@@ -19,31 +20,56 @@ export class CommandLoader {
 
         this.clientId = config.clientId
         this.guildId = config.main.guildId
+        this.staffGuildId = config.staff.guildId
 
-        this.loadCommands()
-        console.log("Loaded commands")
-        this.deployCommands().then(() => console.log("Deployed commands"))
+        this.loadCommands().then(() => {
+            console.log("Successfully loaded commands.")
+            this.deployCommands()
+        })
     }
 
     public getCommand(name: string): Command | undefined {
         return this.commands.get(name)
     }
 
-    public loadCommands() {
-        searchForFIles("./commands").forEach(async (file: string) => {
+    public async loadCommands(): Promise<void> {
+        const files = searchForFIles("./commands")
+        for (const file of files) {
             const command: Command = new (await import(file)).default()
             this.commands.set(command.name, command)
-        })
+        }
     }
 
-    public async deployCommands() {
+    public deployCommands() {
         const rest = new REST().setToken(this.token)
         const cmds: RESTPostAPIChatInputApplicationCommandsJSONBody[] = []
-        for (const command of this.commands.values())
-            cmds.push(command.slashCommandBuilder)
-        await rest.put(
-            Routes.applicationGuildCommands(this.clientId, this.guildId),
+        const global: RESTPostAPIChatInputApplicationCommandsJSONBody[] = []
+        for (const command of this.commands.values()) {
+            if (command.global) global.push(command.slashCommandBuilder)
+            else cmds.push(command.slashCommandBuilder)
+        }
+
+        rest.put(Routes.applicationGuildCommands(this.clientId, this.guildId), {
+            body: cmds
+        }).then(() =>
+            console.log(
+                "Successfully registered main guild application commands."
+            )
+        )
+
+        rest.put(
+            Routes.applicationGuildCommands(this.clientId, this.staffGuildId),
             { body: cmds }
+        ).then(() =>
+            console.log(
+                "Successfully registered staff guild application commands."
+            )
+        )
+
+        rest.put(Routes.applicationCommands(this.clientId), {
+            body: global
+        }).then(() =>
+            console.log("Successfully registered global application commands.")
         )
     }
 }

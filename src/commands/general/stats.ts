@@ -14,6 +14,7 @@ export default class StatsCommand implements Command {
     permission = Permission.Default
     description = "To get the stats of a player"
     category = "general"
+    global = true
     slashCommandBuilder = new SlashCommandBuilder()
         .setName(this.name)
         .setDescription(this.description)

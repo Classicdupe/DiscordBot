@@ -14,6 +14,7 @@ export default class AppCommand implements Command {
     permission = Permission.Admin
     description = "To accept or deny people's applications"
     category = "admin"
+    global = false
     slashCommandBuilder = new SlashCommandBuilder()
         .setName(this.name)
         .setDescription(this.description)

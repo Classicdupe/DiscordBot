@@ -7,6 +7,7 @@ export default class PingCommand implements Command {
     permission = Permission.Default
     description = "To ping the bot!"
     category = "general"
+    global = true
     slashCommandBuilder = new SlashCommandBuilder()
         .setName(this.name)
         .setDescription(this.description)

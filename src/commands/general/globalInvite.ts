@@ -12,6 +12,7 @@ export default class GlobalInvite implements Command {
     permission = Permission.Default
     description = "To get the global invite link"
     category = "general"
+    global = true
     slashCommandBuilder = new SlashCommandBuilder()
         .setName(this.name)
         .setDescription(this.description)

@@ -4,6 +4,7 @@ import { Database } from "./database"
 import { readFileSync } from "fs"
 import dotenv from "dotenv"
 import searchForFiles from "./utils/searchForFiles"
+import { MusicPlayer } from "./utils/musicPlayer"
 
 dotenv.config({
     path: "./../resources/.env"
@@ -40,9 +41,10 @@ const client = new Client({
 client.commandLoader = new CommandLoader(config)
 client.database = new Database(config)
 client.config = config
+client.musicPlayers = new Collection()
 
 searchForFiles("./events").forEach(async (file) => {
-    const event = await import(file)
+    const event = (await import(file)).default
     const name = file.split("/").slice(-1).pop()?.split(".")[0]
     if (!name) return
     client.on(name, event.bind(null, client))
@@ -55,6 +57,7 @@ export type ClassicClient = Client & {
     database: Database
     invites: Collection<string, number>
     config: Config
+    musicPlayers: Collection<string, MusicPlayer>
 }
 
 export type Config = {
@@ -66,6 +69,9 @@ export type Config = {
             activity: string
             info: string
         }
+    }
+    staff: {
+        guildId: string
     }
     database: DatabaseData
 }
