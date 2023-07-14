@@ -10,6 +10,7 @@ export type Command = {
     permission: Permission
     description: string
     category: string
+    global: boolean
     slashCommandBuilder: RESTPostAPIChatInputApplicationCommandsJSONBody
     execute:
         | ((

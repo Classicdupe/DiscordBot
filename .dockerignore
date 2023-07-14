@@ -5,3 +5,4 @@
 .gitignore
 .prettierrc
 package-lock.json
+/resources/libsodium.tar.gz
