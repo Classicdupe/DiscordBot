@@ -9,8 +9,8 @@ jobs:
             - uses: actions/setup-node@v3
               with:
                 node-version: '14'
-            - run: apt-get update
-            - run: apt-get install python3 autoconf automake g++ libtool build-essential libtool-bin -y
+            - run: sudo apt-get update
+            - run: sudo apt-get install python3 autoconf automake g++ libtool build-essential libtool-bin -y
             - run: npm install --legacy-peer-deps
             - run: npm install -g typescript
             - run: tsc
