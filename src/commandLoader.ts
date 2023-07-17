@@ -1,11 +1,13 @@
 import { Command } from "./command"
 import {
+    PermissionFlagsBits,
     REST,
     RESTPostAPIChatInputApplicationCommandsJSONBody,
     Routes
 } from "discord.js"
 import searchForFIles from "./utils/searchForFiles"
 import { Config } from "."
+import { ExternalCommand } from "./externalCommands"
 
 export class CommandLoader {
     public token: string
@@ -40,13 +42,19 @@ export class CommandLoader {
         }
     }
 
-    public deployCommands() {
+    public async deployCommands() {
         const rest = new REST().setToken(this.token)
         const cmds: RESTPostAPIChatInputApplicationCommandsJSONBody[] = []
         const global: RESTPostAPIChatInputApplicationCommandsJSONBody[] = []
         for (const command of this.commands.values()) {
             if (command.global) global.push(command.slashCommandBuilder)
             else cmds.push(command.slashCommandBuilder)
+        }
+
+        const extCmds: ExternalCommand[] = (await import("./externalCommands")).default;
+        for(const command of extCmds) {
+            if(command.global) global.push(command.slash)
+            else cmds.push(command.slash)
         }
 
         rest.put(Routes.applicationGuildCommands(this.clientId, this.guildId), {
