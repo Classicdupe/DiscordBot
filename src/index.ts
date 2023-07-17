@@ -69,6 +69,11 @@ export type Config = {
             activity: string
             info: string
         }
+        roles: {
+            bigClanOwner: string
+            clanOwner: string
+            clanAdmin: string 
+        }
     }
     staff: {
         guildId: string

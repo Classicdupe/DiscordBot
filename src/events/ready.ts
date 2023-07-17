@@ -17,4 +17,7 @@ module.exports = async (client: ClassicClient) => {
     client.database.loadAllInvites(
         client.guilds.cache.get(client.config.main.guildId) as Guild
     )
+
+    client.database.checkClanAdminOwner(client)
+    setTimeout(() => { client.database.checkClanAdminOwner(client) }, 1000 * 60 * 5)
 }
