@@ -72,7 +72,7 @@ export type Config = {
         roles: {
             bigClanOwner: string
             clanOwner: string
-            clanAdmin: string 
+            clanAdmin: string
         }
     }
     staff: {

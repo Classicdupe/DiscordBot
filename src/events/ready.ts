@@ -19,5 +19,10 @@ module.exports = async (client: ClassicClient) => {
     )
 
     client.database.checkClanAdminOwner(client)
-    setTimeout(() => { client.database.checkClanAdminOwner(client) }, 1000 * 60 * 5)
+    setTimeout(
+        () => {
+            client.database.checkClanAdminOwner(client)
+        },
+        1000 * 60 * 5
+    )
 }

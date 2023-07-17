@@ -33,36 +33,59 @@ export class Database {
         JOIN clanPlayers P ON L.uuid=P.uuid 
         JOIN clans C ON P.clanId=C.clanId 
         JOIN clanPlayers PC ON C.clanId=PC.clanId
-        WHERE L.uuid IN(SELECT DISTINCT uuid FROM clanPlayers WHERE level>=2)`);
+        WHERE L.uuid IN(SELECT DISTINCT uuid FROM clanPlayers WHERE level>=2)`)
 
-        const guild = client.guilds.cache.get(client.config.main.guildId) as Guild
-        const clanAdmin = guild.roles.cache.get(client.config.main.roles.clanAdmin) as Role
-        const clanOwner = guild.roles.cache.get(client.config.main.roles.clanOwner) as Role
-        const bigClanOwner = guild.roles.cache.get(client.config.main.roles.bigClanOwner) as Role
+        const guild = client.guilds.cache.get(
+            client.config.main.guildId
+        ) as Guild
+        const clanAdmin = guild.roles.cache.get(
+            client.config.main.roles.clanAdmin
+        ) as Role
+        const clanOwner = guild.roles.cache.get(
+            client.config.main.roles.clanOwner
+        ) as Role
+        const bigClanOwner = guild.roles.cache.get(
+            client.config.main.roles.bigClanOwner
+        ) as Role
         const ids: string[] = []
 
-        for(let i = 0; i < results.length; i++) {
-            const member = guild.members.cache.get(results[i].dscid) != null ? guild.members.cache.get(results[i].dscid) : await guild.members.fetch(results[i].dscid)
-            if(member == null) continue;
+        for (let i = 0; i < results.length; i++) {
+            const member =
+                guild.members.cache.get(results[i].dscid) != null
+                    ? guild.members.cache.get(results[i].dscid)
+                    : await guild.members.fetch(results[i].dscid)
+            if (member == null) continue
             ids.push(member.id)
-            if(results[i].level == 3 && results[i].clanSize > 10) {
+            if (results[i].level == 3 && results[i].clanSize > 10) {
                 member.roles.add(bigClanOwner)
-                if(member.roles.cache.has(clanOwner.id)) member.roles.remove(clanOwner)
-                if(member.roles.cache.has(clanAdmin.id)) member.roles.remove(clanAdmin)
-            } else if(results[i].level == 3) {
+                if (member.roles.cache.has(clanOwner.id))
+                    member.roles.remove(clanOwner)
+                if (member.roles.cache.has(clanAdmin.id))
+                    member.roles.remove(clanAdmin)
+            } else if (results[i].level == 3) {
                 member.roles.add(clanOwner)
-                if(member.roles.cache.has(bigClanOwner.id)) member.roles.remove(bigClanOwner)
-                if(member.roles.cache.has(clanAdmin.id)) member.roles.remove(clanAdmin)
+                if (member.roles.cache.has(bigClanOwner.id))
+                    member.roles.remove(bigClanOwner)
+                if (member.roles.cache.has(clanAdmin.id))
+                    member.roles.remove(clanAdmin)
             } else {
                 member.roles.add(clanAdmin)
-                if(member.roles.cache.has(bigClanOwner.id)) member.roles.remove(bigClanOwner)
-                if(member.roles.cache.has(clanOwner.id)) member.roles.remove(clanOwner)
+                if (member.roles.cache.has(bigClanOwner.id))
+                    member.roles.remove(bigClanOwner)
+                if (member.roles.cache.has(clanOwner.id))
+                    member.roles.remove(clanOwner)
             }
         }
 
-        clanAdmin.members.filter(member => !ids.includes(member.id)).forEach(member => member.roles.remove(clanAdmin))
-        clanOwner.members.filter(member => !ids.includes(member.id)).forEach(member => member.roles.remove(clanOwner))
-        bigClanOwner.members.filter(member => !ids.includes(member.id)).forEach(member => member.roles.remove(bigClanOwner))
+        clanAdmin.members
+            .filter((member) => !ids.includes(member.id))
+            .forEach((member) => member.roles.remove(clanAdmin))
+        clanOwner.members
+            .filter((member) => !ids.includes(member.id))
+            .forEach((member) => member.roles.remove(clanOwner))
+        bigClanOwner.members
+            .filter((member) => !ids.includes(member.id))
+            .forEach((member) => member.roles.remove(bigClanOwner))
     }
 
     async loadAllInvites(guild: Guild) {
@@ -342,7 +365,8 @@ export class Database {
                         gradient: result[0].gradient,
                         gradientfrom: result[0].gradientfrom,
                         gradientto: result[0].gradientto,
-                        night: result[0].night
+                        night: result[0].night,
+                        balance: result[0].balance
                     }
                     resolve(playerData)
                 })
@@ -377,7 +401,8 @@ export class Database {
                         gradient: result[0].gradient,
                         gradientfrom: result[0].gradientfrom,
                         gradientto: result[0].gradientto,
-                        night: result[0].night
+                        night: result[0].night,
+                        balance: result[0].balance
                     }
                     resolve(playerData)
                 })
@@ -500,6 +525,7 @@ export type PlayerData = {
     gradientfrom: string
     gradientto: string
     night: boolean
+    balance: bigint
 }
 
 export type LinkData = {

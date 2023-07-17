@@ -27,9 +27,16 @@ export default class PlayCommand implements Command {
                 .setRequired(true)
         )
         .toJSON()
-    async execute(client: ClassicClient, message: Message, command: string, args: string[]) {
-        if(args.length != 1) return message.reply({
-                content: "Invalid usage, please use `!play <youtube url>`"})
+    async execute(
+        client: ClassicClient,
+        message: Message,
+        command: string,
+        args: string[]
+    ) {
+        if (args.length != 1)
+            return message.reply({
+                content: "Invalid usage, please use `!play <youtube url>`"
+            })
         const songUrl = args[0]
         const member = message.member as GuildMember
 

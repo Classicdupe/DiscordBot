@@ -95,6 +95,8 @@ export default class StatsCommand implements Command {
                                     playerStats.kills / playerStats.deaths
                                 ).toFixed(2) +
                                 "\n" +
+                                `Balance: ${playerData.balance}` +
+                                "\n" +
                                 `Playtime: Coming Soon\n` + //${hours}:${minutes}:${seconds}\n` +
                                 linked
                         )
@@ -160,6 +162,8 @@ export default class StatsCommand implements Command {
                                 (
                                     playerStats.kills / playerStats.deaths
                                 ).toFixed(2) +
+                                "\n" +
+                                `Balance: ${playerData.balance}` +
                                 "\n" +
                                 `Playtime: Coming Soon\n` + //${hours}:${minutes}:${seconds}\n` +
                                 `Linked To: <@${linkData.discordId}>`

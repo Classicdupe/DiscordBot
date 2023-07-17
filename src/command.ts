@@ -1,7 +1,5 @@
 import {
-    ChatInputApplicationCommandData,
     ChatInputCommandInteraction,
-    CommandInteraction,
     Message,
     RESTPostAPIChatInputApplicationCommandsJSONBody
 } from "discord.js"

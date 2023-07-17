@@ -13,9 +13,7 @@ export default class LeaveCommand implements Command {
         .setDescription(this.description)
         .toJSON()
     execute(client: ClassicClient, message: Message) {
-        const musicPlayer = client.musicPlayers.get(
-            message.guildId as string
-        )
+        const musicPlayer = client.musicPlayers.get(message.guildId as string)
         if (!musicPlayer)
             return message.reply({
                 content: "I'm not in a voice channel"

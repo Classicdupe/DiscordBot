@@ -1,6 +1,5 @@
 import { Command } from "./command"
 import {
-    PermissionFlagsBits,
     REST,
     RESTPostAPIChatInputApplicationCommandsJSONBody,
     Routes
@@ -51,9 +50,10 @@ export class CommandLoader {
             else cmds.push(command.slashCommandBuilder)
         }
 
-        const extCmds: ExternalCommand[] = (await import("./externalCommands")).default;
-        for(const command of extCmds) {
-            if(command.global) global.push(command.slash)
+        const extCmds: ExternalCommand[] = (await import("./externalCommands"))
+            .default
+        for (const command of extCmds) {
+            if (command.global) global.push(command.slash)
             else cmds.push(command.slash)
         }
 

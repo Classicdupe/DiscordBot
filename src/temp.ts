@@ -1,4 +1,4 @@
-import { MinehutApiCommunicator } from "./utils/minehutApiCommunicator";
+import { MinehutApiCommunicator } from "./utils/minehutApiCommunicator"
 import fs from "fs"
 import dotenv from "dotenv"
 

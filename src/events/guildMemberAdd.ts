@@ -20,7 +20,7 @@ module.exports = async (client: ClassicClient, member: GuildMember) => {
             (invite.uses as number) >
             (client.invites.get(invite.code) as number)
     ) as Invite
-    if(!invite) return
+    if (!invite) return
     const inviter = client.guilds.cache
         .get(client.config.main.guildId)
         ?.members.cache.get(invite?.inviter?.id as string) as GuildMember
