@@ -1,0 +1,16 @@
+name: Build
+on: [push, pull_request]
+jobs:
+    buildJob:
+        name: Build 
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-node@v3
+              with:
+                node-version: '14'
+            - run: apt-get update
+            - run: apt-get install python3 autoconf automake g++ libtool build-essential libtool-bin -y
+            - run: npm install --legacy-peer-deps
+            - run: npm install -g typescript
+            - run: tsc
